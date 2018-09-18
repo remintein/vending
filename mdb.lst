@@ -1,0 +1,1735 @@
+   1               		.file	"mdb.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	mdb_reader
+  18               	mdb_reader:
+  19               	.LFB8:
+  20               	.LM1:
+  21 0000 1F93      		push r17
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24               	.LM2:
+  25 0002 81E0      		ldi r24,lo8(1)
+  26 0004 60E0      		ldi r22,lo8(0)
+  27 0006 0E94 0000 		call buffer_level
+  28 000a 8430      		cpi r24,lo8(4)
+  29 000c 00F4      		brsh .+2
+  30 000e 00C0      		rjmp .L10
+  31               	.LM3:
+  32 0010 81E0      		ldi r24,lo8(1)
+  33 0012 0E94 0000 		call recv_mdb
+  34 0016 182F      		mov r17,r24
+  35 0018 81E0      		ldi r24,lo8(1)
+  36 001a 0E94 0000 		call recv_mdb
+  37               	.LM4:
+  38 001e 1130      		cpi r17,lo8(1)
+  39 0020 01F0      		breq .L5
+  40 0022 1130      		cpi r17,lo8(1)
+  41 0024 00F0      		brlo .L4
+  42 0026 1230      		cpi r17,lo8(2)
+  43 0028 01F4      		brne .L11
+  44 002a 00C0      		rjmp .L14
+  45               	.L4:
+  46               	.LM5:
+  47 002c 8431      		cpi r24,lo8(20)
+  48 002e 01F0      		breq .L7
+  49               	.LM6:
+  50 0030 80E0      		ldi r24,lo8(0)
+  51 0032 60E0      		ldi r22,lo8(__c.2015)
+  52 0034 70E0      		ldi r23,hi8(__c.2015)
+  53 0036 00C0      		rjmp .L12
+  54               	.L7:
+  55               	.LM7:
+  56 0038 81E0      		ldi r24,lo8(1)
+  57 003a 60E0      		ldi r22,lo8(256)
+  58 003c 71E0      		ldi r23,hi8(256)
+  59 003e 0E94 0000 		call send_mdb
+  60               	.LM8:
+  61 0042 1092 0000 		sts mdb_active_cmd,__zero_reg__
+  62               	.LM9:
+  63 0046 1092 0000 		sts mdb_poll_reply,__zero_reg__
+  64               	.LM10:
+  65 004a 81E0      		ldi r24,lo8(1)
+  66 004c 00C0      		rjmp .L13
+  67               	.L5:
+  68               	.LM11:
+  69 004e 8531      		cpi r24,lo8(21)
+  70 0050 01F0      		breq .L8
+  71               	.LM12:
+  72 0052 80E0      		ldi r24,lo8(0)
+  73 0054 60E0      		ldi r22,lo8(__c.2019)
+  74 0056 70E0      		ldi r23,hi8(__c.2019)
+  75 0058 00C0      		rjmp .L12
+  76               	.L8:
+  77               	.LM13:
+  78 005a 81E0      		ldi r24,lo8(1)
+  79 005c 60E0      		ldi r22,lo8(256)
+  80 005e 71E0      		ldi r23,hi8(256)
+  81 0060 0E94 0000 		call send_mdb
+  82               	.LM14:
+  83 0064 1092 0000 		sts mdb_active_cmd,__zero_reg__
+  84               	.LM15:
+  85 0068 1092 0000 		sts mdb_poll_reply,__zero_reg__
+  86               	.LM16:
+  87 006c 82E0      		ldi r24,lo8(2)
+  88               	.L13:
+  89 006e 8093 0000 		sts mdb_state,r24
+  90 0072 00C0      		rjmp .L10
+  91               	.L14:
+  92               	.LM17:
+  93 0074 8631      		cpi r24,lo8(22)
+  94 0076 01F0      		breq .L9
+  95               	.LM18:
+  96 0078 80E0      		ldi r24,lo8(0)
+  97 007a 60E0      		ldi r22,lo8(__c.2022)
+  98 007c 70E0      		ldi r23,hi8(__c.2022)
+  99 007e 00C0      		rjmp .L12
+ 100               	.L9:
+ 101               	.LM19:
+ 102 0080 81E0      		ldi r24,lo8(1)
+ 103 0082 60E0      		ldi r22,lo8(256)
+ 104 0084 71E0      		ldi r23,hi8(256)
+ 105 0086 0E94 0000 		call send_mdb
+ 106               	.LM20:
+ 107 008a 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 108               	.LM21:
+ 109 008e 89E0      		ldi r24,lo8(9)
+ 110 0090 8093 0000 		sts mdb_poll_reply,r24
+ 111               	.LM22:
+ 112 0094 1093 0000 		sts mdb_state,r17
+ 113 0098 00C0      		rjmp .L10
+ 114               	.L11:
+ 115               	.LM23:
+ 116 009a 80E0      		ldi r24,lo8(0)
+ 117 009c 60E0      		ldi r22,lo8(__c.2025)
+ 118 009e 70E0      		ldi r23,hi8(__c.2025)
+ 119               	.L12:
+ 120 00a0 0E94 0000 		call send_str_p
+ 121               	.LM24:
+ 122 00a4 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 123               	.LM25:
+ 124 00a8 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 125               	.L10:
+ 126               	/* epilogue start */
+ 127               	.LM26:
+ 128 00ac 1F91      		pop r17
+ 129 00ae 0895      		ret
+ 130               	.LFE8:
+ 132               	.global	mdb_poll
+ 134               	mdb_poll:
+ 135               	.LFB6:
+ 136               	.LM27:
+ 137 00b0 0F93      		push r16
+ 138 00b2 1F93      		push r17
+ 139               	/* prologue: function */
+ 140               	/* frame size = 0 */
+ 141               	.LM28:
+ 142 00b4 8091 0000 		lds r24,state.1858
+ 143 00b8 8823      		tst r24
+ 144 00ba 01F4      		brne .L16
+ 145               	.LM29:
+ 146 00bc 81E0      		ldi r24,lo8(1)
+ 147 00be 60E0      		ldi r22,lo8(0)
+ 148 00c0 0E94 0000 		call buffer_level
+ 149 00c4 8230      		cpi r24,lo8(2)
+ 150 00c6 00F4      		brsh .+2
+ 151 00c8 00C0      		rjmp .L42
+ 152               	.LM30:
+ 153 00ca 81E0      		ldi r24,lo8(1)
+ 154 00cc 0E94 0000 		call recv_mdb
+ 155 00d0 4297      		sbiw r24,18
+ 156 00d2 01F0      		breq .L18
+ 157               	.LM31:
+ 158 00d4 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 159               	.LM32:
+ 160 00d8 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 161               	.LM33:
+ 162 00dc 1092 0000 		sts state.1858,__zero_reg__
+ 163               	.LM34:
+ 164 00e0 80E0      		ldi r24,lo8(0)
+ 165 00e2 60E0      		ldi r22,lo8(__c.1860)
+ 166 00e4 70E0      		ldi r23,hi8(__c.1860)
+ 167 00e6 00C0      		rjmp .L43
+ 168               	.L18:
+ 169               	.LM35:
+ 170 00e8 81E0      		ldi r24,lo8(1)
+ 171 00ea 8093 0000 		sts state.1858,r24
+ 172               	.L16:
+ 173               	.LM36:
+ 174 00ee 8091 0000 		lds r24,mdb_poll_reply
+ 175 00f2 8530      		cpi r24,lo8(5)
+ 176 00f4 01F4      		brne .+2
+ 177 00f6 00C0      		rjmp .L22
+ 178 00f8 8630      		cpi r24,lo8(6)
+ 179 00fa 00F4      		brsh .L27
+ 180 00fc 8130      		cpi r24,lo8(1)
+ 181 00fe 01F0      		breq .L20
+ 182 0100 8130      		cpi r24,lo8(1)
+ 183 0102 00F0      		brlo .L19
+ 184 0104 8430      		cpi r24,lo8(4)
+ 185 0106 01F0      		breq .+2
+ 186 0108 00C0      		rjmp .L42
+ 187 010a 00C0      		rjmp .L46
+ 188               	.L27:
+ 189 010c 8730      		cpi r24,lo8(7)
+ 190 010e 01F4      		brne .+2
+ 191 0110 00C0      		rjmp .L24
+ 192 0112 8730      		cpi r24,lo8(7)
+ 193 0114 00F4      		brsh .+2
+ 194 0116 00C0      		rjmp .L23
+ 195 0118 8830      		cpi r24,lo8(8)
+ 196 011a 01F4      		brne .+2
+ 197 011c 00C0      		rjmp .L25
+ 198 011e 8930      		cpi r24,lo8(9)
+ 199 0120 01F0      		breq .+2
+ 200 0122 00C0      		rjmp .L42
+ 201 0124 00C0      		rjmp .L47
+ 202               	.L19:
+ 203               	.LM37:
+ 204 0126 81E0      		ldi r24,lo8(1)
+ 205 0128 60E0      		ldi r22,lo8(256)
+ 206 012a 71E0      		ldi r23,hi8(256)
+ 207 012c 0E94 0000 		call send_mdb
+ 208 0130 00C0      		rjmp .L41
+ 209               	.L20:
+ 210               	.LM38:
+ 211 0132 8091 0000 		lds r24,state.1858
+ 212 0136 8130      		cpi r24,lo8(1)
+ 213 0138 01F4      		brne .L28
+ 214               	.LM39:
+ 215 013a 60E0      		ldi r22,lo8(0)
+ 216 013c 70E0      		ldi r23,hi8(0)
+ 217 013e 0E94 0000 		call send_mdb
+ 218               	.LM40:
+ 219 0142 81E0      		ldi r24,lo8(1)
+ 220 0144 60E0      		ldi r22,lo8(256)
+ 221 0146 71E0      		ldi r23,hi8(256)
+ 222 0148 00C0      		rjmp .L44
+ 223               	.L28:
+ 224               	.LM41:
+ 225 014a 8230      		cpi r24,lo8(2)
+ 226 014c 01F0      		breq .+2
+ 227 014e 00C0      		rjmp .L42
+ 228               	.LM42:
+ 229 0150 81E0      		ldi r24,lo8(1)
+ 230 0152 60E0      		ldi r22,lo8(0)
+ 231 0154 0E94 0000 		call buffer_level
+ 232 0158 8230      		cpi r24,lo8(2)
+ 233 015a 00F4      		brsh .+2
+ 234 015c 00C0      		rjmp .L42
+ 235               	.LM43:
+ 236 015e 81E0      		ldi r24,lo8(1)
+ 237 0160 0E94 0000 		call recv_mdb
+ 238 0164 892B      		or r24,r25
+ 239 0166 01F4      		brne .+2
+ 240 0168 00C0      		rjmp .L41
+ 241               	.LM44:
+ 242 016a 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 243               	.LM45:
+ 244 016e 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 245               	.LM46:
+ 246 0172 1092 0000 		sts state.1858,__zero_reg__
+ 247               	.LM47:
+ 248 0176 80E0      		ldi r24,lo8(0)
+ 249 0178 60E0      		ldi r22,lo8(__c.1865)
+ 250 017a 70E0      		ldi r23,hi8(__c.1865)
+ 251               	.L43:
+ 252 017c 0E94 0000 		call send_str_p
+ 253 0180 00C0      		rjmp .L42
+ 254               	.L46:
+ 255               	.LM48:
+ 256 0182 8091 0000 		lds r24,session
+ 257 0186 8823      		tst r24
+ 258 0188 01F4      		brne .+2
+ 259 018a 00C0      		rjmp .L42
+ 260 018c 8091 0000 		lds r24,state.1858
+ 261 0190 8130      		cpi r24,lo8(1)
+ 262 0192 01F4      		brne .L30
+ 263               	.LBB2:
+ 264               	.LM49:
+ 265 0194 63E0      		ldi r22,lo8(3)
+ 266 0196 70E0      		ldi r23,hi8(3)
+ 267 0198 0E94 0000 		call send_mdb
+ 268               	.LM50:
+ 269 019c 6091 0000 		lds r22,session+2
+ 270 01a0 81E0      		ldi r24,lo8(1)
+ 271 01a2 70E0      		ldi r23,lo8(0)
+ 272 01a4 0E94 0000 		call send_mdb
+ 273               	.LM51:
+ 274 01a8 6091 0000 		lds r22,session+1
+ 275 01ac 7091 0000 		lds r23,(session+1)+1
+ 276 01b0 7070      		andi r23,hi8(255)
+ 277 01b2 81E0      		ldi r24,lo8(1)
+ 278 01b4 0E94 0000 		call send_mdb
+ 279               	.LM52:
+ 280 01b8 8091 0000 		lds r24,session+1
+ 281 01bc 0091 0000 		lds r16,session+2
+ 282               	.LM53:
+ 283 01c0 10E0      		ldi r17,lo8(0)
+ 284 01c2 080F      		add r16,r24
+ 285 01c4 111D      		adc r17,__zero_reg__
+ 286 01c6 0D5F      		subi r16,lo8(-(3))
+ 287 01c8 1F4F      		sbci r17,hi8(-(3))
+ 288 01ca 00C0      		rjmp .L45
+ 289               	.L30:
+ 290               	.LBE2:
+ 291               	.LM54:
+ 292 01cc 8230      		cpi r24,lo8(2)
+ 293 01ce 01F0      		breq .+2
+ 294 01d0 00C0      		rjmp .L42
+ 295               	.LM55:
+ 296 01d2 81E0      		ldi r24,lo8(1)
+ 297 01d4 60E0      		ldi r22,lo8(0)
+ 298 01d6 0E94 0000 		call buffer_level
+ 299 01da 8230      		cpi r24,lo8(2)
+ 300 01dc 00F4      		brsh .+2
+ 301 01de 00C0      		rjmp .L42
+ 302               	.LM56:
+ 303 01e0 81E0      		ldi r24,lo8(1)
+ 304 01e2 0E94 0000 		call recv_mdb
+ 305 01e6 892B      		or r24,r25
+ 306 01e8 01F0      		breq .L31
+ 307               	.LM57:
+ 308 01ea 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 309               	.LM58:
+ 310 01ee 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 311               	.LM59:
+ 312 01f2 1092 0000 		sts session,__zero_reg__
+ 313               	.LM60:
+ 314 01f6 1092 0000 		sts (session+1)+1,__zero_reg__
+ 315 01fa 1092 0000 		sts session+1,__zero_reg__
+ 316               	.LM61:
+ 317 01fe 1092 0000 		sts state.1858,__zero_reg__
+ 318               	.LM62:
+ 319 0202 80E0      		ldi r24,lo8(0)
+ 320 0204 60E0      		ldi r22,lo8(__c.1871)
+ 321 0206 70E0      		ldi r23,hi8(__c.1871)
+ 322 0208 00C0      		rjmp .L43
+ 323               	.L31:
+ 324               	.LM63:
+ 325 020a 1092 0000 		sts session,__zero_reg__
+ 326               	.LM64:
+ 327 020e 1092 0000 		sts (session+1)+1,__zero_reg__
+ 328 0212 1092 0000 		sts session+1,__zero_reg__
+ 329               	.LM65:
+ 330 0216 83E0      		ldi r24,lo8(3)
+ 331 0218 8093 0000 		sts mdb_state,r24
+ 332 021c 00C0      		rjmp .L41
+ 333               	.L22:
+ 334               	.LM66:
+ 335 021e 8091 0000 		lds r24,state.1858
+ 336 0222 8130      		cpi r24,lo8(1)
+ 337 0224 01F4      		brne .L32
+ 338               	.LM67:
+ 339 0226 64E0      		ldi r22,lo8(4)
+ 340 0228 70E0      		ldi r23,hi8(4)
+ 341 022a 0E94 0000 		call send_mdb
+ 342               	.LM68:
+ 343 022e 81E0      		ldi r24,lo8(1)
+ 344 0230 64E0      		ldi r22,lo8(260)
+ 345 0232 71E0      		ldi r23,hi8(260)
+ 346 0234 00C0      		rjmp .L44
+ 347               	.L32:
+ 348               	.LM69:
+ 349 0236 8230      		cpi r24,lo8(2)
+ 350 0238 01F0      		breq .+2
+ 351 023a 00C0      		rjmp .L42
+ 352               	.LM70:
+ 353 023c 81E0      		ldi r24,lo8(1)
+ 354 023e 60E0      		ldi r22,lo8(0)
+ 355 0240 0E94 0000 		call buffer_level
+ 356 0244 8230      		cpi r24,lo8(2)
+ 357 0246 00F4      		brsh .+2
+ 358 0248 00C0      		rjmp .L42
+ 359               	.LM71:
+ 360 024a 81E0      		ldi r24,lo8(1)
+ 361 024c 0E94 0000 		call recv_mdb
+ 362 0250 892B      		or r24,r25
+ 363 0252 01F0      		breq .L33
+ 364               	.LM72:
+ 365 0254 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 366               	.LM73:
+ 367 0258 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 368               	.LM74:
+ 369 025c 1092 0000 		sts session,__zero_reg__
+ 370               	.LM75:
+ 371 0260 1092 0000 		sts (session+1)+1,__zero_reg__
+ 372 0264 1092 0000 		sts session+1,__zero_reg__
+ 373               	.LM76:
+ 374 0268 1092 0000 		sts state.1858,__zero_reg__
+ 375               	.LM77:
+ 376 026c 80E0      		ldi r24,lo8(0)
+ 377 026e 60E0      		ldi r22,lo8(__c.1874)
+ 378 0270 70E0      		ldi r23,hi8(__c.1874)
+ 379 0272 00C0      		rjmp .L43
+ 380               	.L33:
+ 381               	.LM78:
+ 382 0274 1092 0000 		sts session,__zero_reg__
+ 383               	.LM79:
+ 384 0278 1092 0000 		sts (session+1)+1,__zero_reg__
+ 385 027c 1092 0000 		sts session+1,__zero_reg__
+ 386 0280 00C0      		rjmp .L41
+ 387               	.L23:
+ 388               	.LM80:
+ 389 0282 8091 0000 		lds r24,session+3
+ 390 0286 8823      		tst r24
+ 391 0288 01F4      		brne .+2
+ 392 028a 00C0      		rjmp .L42
+ 393 028c 8091 0000 		lds r24,state.1858
+ 394 0290 8130      		cpi r24,lo8(1)
+ 395 0292 01F4      		brne .L34
+ 396               	.LM81:
+ 397 0294 65E0      		ldi r22,lo8(5)
+ 398 0296 70E0      		ldi r23,hi8(5)
+ 399 0298 0E94 0000 		call send_mdb
+ 400               	.LM82:
+ 401 029c 6091 0000 		lds r22,session+6
+ 402 02a0 81E0      		ldi r24,lo8(1)
+ 403 02a2 70E0      		ldi r23,lo8(0)
+ 404 02a4 0E94 0000 		call send_mdb
+ 405               	.LM83:
+ 406 02a8 6091 0000 		lds r22,session+5
+ 407 02ac 7091 0000 		lds r23,(session+5)+1
+ 408 02b0 7070      		andi r23,hi8(255)
+ 409 02b2 81E0      		ldi r24,lo8(1)
+ 410 02b4 0E94 0000 		call send_mdb
+ 411               	.LM84:
+ 412 02b8 8091 0000 		lds r24,session+5
+ 413 02bc 0091 0000 		lds r16,session+6
+ 414               	.LM85:
+ 415 02c0 10E0      		ldi r17,lo8(0)
+ 416 02c2 080F      		add r16,r24
+ 417 02c4 111D      		adc r17,__zero_reg__
+ 418 02c6 0B5F      		subi r16,lo8(-(5))
+ 419 02c8 1F4F      		sbci r17,hi8(-(5))
+ 420               	.L45:
+ 421 02ca 1070      		andi r17,hi8(255)
+ 422               	.LM86:
+ 423 02cc 1160      		ori r17,hi8(256)
+ 424 02ce 81E0      		ldi r24,lo8(1)
+ 425 02d0 B801      		movw r22,r16
+ 426 02d2 00C0      		rjmp .L44
+ 427               	.L34:
+ 428               	.LM87:
+ 429 02d4 8230      		cpi r24,lo8(2)
+ 430 02d6 01F0      		breq .+2
+ 431 02d8 00C0      		rjmp .L42
+ 432               	.LM88:
+ 433 02da 81E0      		ldi r24,lo8(1)
+ 434 02dc 60E0      		ldi r22,lo8(0)
+ 435 02de 0E94 0000 		call buffer_level
+ 436 02e2 8230      		cpi r24,lo8(2)
+ 437 02e4 00F4      		brsh .+2
+ 438 02e6 00C0      		rjmp .L42
+ 439               	.LM89:
+ 440 02e8 81E0      		ldi r24,lo8(1)
+ 441 02ea 0E94 0000 		call recv_mdb
+ 442 02ee 892B      		or r24,r25
+ 443 02f0 01F0      		breq .L35
+ 444               	.LM90:
+ 445 02f2 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 446               	.LM91:
+ 447 02f6 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 448               	.LM92:
+ 449 02fa 1092 0000 		sts session+3,__zero_reg__
+ 450               	.LM93:
+ 451 02fe 1092 0000 		sts (session+5)+1,__zero_reg__
+ 452 0302 1092 0000 		sts session+5,__zero_reg__
+ 453               	.LM94:
+ 454 0306 1092 0000 		sts state.1858,__zero_reg__
+ 455               	.LM95:
+ 456 030a 80E0      		ldi r24,lo8(0)
+ 457 030c 60E0      		ldi r22,lo8(__c.1877)
+ 458 030e 70E0      		ldi r23,hi8(__c.1877)
+ 459 0310 00C0      		rjmp .L43
+ 460               	.L35:
+ 461               	.LM96:
+ 462 0312 1092 0000 		sts session+3,__zero_reg__
+ 463               	.LM97:
+ 464 0316 1092 0000 		sts (session+5)+1,__zero_reg__
+ 465 031a 1092 0000 		sts session+5,__zero_reg__
+ 466 031e 00C0      		rjmp .L41
+ 467               	.L24:
+ 468               	.LM98:
+ 469 0320 8091 0000 		lds r24,session+4
+ 470 0324 8823      		tst r24
+ 471 0326 01F4      		brne .+2
+ 472 0328 00C0      		rjmp .L42
+ 473 032a 8091 0000 		lds r24,state.1858
+ 474 032e 8130      		cpi r24,lo8(1)
+ 475 0330 01F4      		brne .L36
+ 476               	.LM99:
+ 477 0332 66E0      		ldi r22,lo8(6)
+ 478 0334 70E0      		ldi r23,hi8(6)
+ 479 0336 0E94 0000 		call send_mdb
+ 480               	.LM100:
+ 481 033a 81E0      		ldi r24,lo8(1)
+ 482 033c 66E0      		ldi r22,lo8(262)
+ 483 033e 71E0      		ldi r23,hi8(262)
+ 484 0340 00C0      		rjmp .L44
+ 485               	.L36:
+ 486               	.LM101:
+ 487 0342 8230      		cpi r24,lo8(2)
+ 488 0344 01F0      		breq .+2
+ 489 0346 00C0      		rjmp .L42
+ 490               	.LM102:
+ 491 0348 81E0      		ldi r24,lo8(1)
+ 492 034a 60E0      		ldi r22,lo8(0)
+ 493 034c 0E94 0000 		call buffer_level
+ 494 0350 8230      		cpi r24,lo8(2)
+ 495 0352 00F4      		brsh .+2
+ 496 0354 00C0      		rjmp .L42
+ 497               	.LM103:
+ 498 0356 81E0      		ldi r24,lo8(1)
+ 499 0358 0E94 0000 		call recv_mdb
+ 500 035c 892B      		or r24,r25
+ 501 035e 01F0      		breq .L37
+ 502               	.LM104:
+ 503 0360 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 504               	.LM105:
+ 505 0364 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 506               	.LM106:
+ 507 0368 1092 0000 		sts session,__zero_reg__
+ 508               	.LM107:
+ 509 036c 1092 0000 		sts (session+1)+1,__zero_reg__
+ 510 0370 1092 0000 		sts session+1,__zero_reg__
+ 511               	.LM108:
+ 512 0374 1092 0000 		sts session+4,__zero_reg__
+ 513               	.LM109:
+ 514 0378 1092 0000 		sts state.1858,__zero_reg__
+ 515               	.LM110:
+ 516 037c 80E0      		ldi r24,lo8(0)
+ 517 037e 60E0      		ldi r22,lo8(__c.1880)
+ 518 0380 70E0      		ldi r23,hi8(__c.1880)
+ 519 0382 00C0      		rjmp .L43
+ 520               	.L37:
+ 521               	.LM111:
+ 522 0384 1092 0000 		sts session,__zero_reg__
+ 523               	.LM112:
+ 524 0388 1092 0000 		sts (session+1)+1,__zero_reg__
+ 525 038c 1092 0000 		sts session+1,__zero_reg__
+ 526               	.LM113:
+ 527 0390 1092 0000 		sts session+4,__zero_reg__
+ 528 0394 00C0      		rjmp .L41
+ 529               	.L25:
+ 530               	.LM114:
+ 531 0396 8091 0000 		lds r24,state.1858
+ 532 039a 8130      		cpi r24,lo8(1)
+ 533 039c 01F4      		brne .L38
+ 534               	.LM115:
+ 535 039e 67E0      		ldi r22,lo8(7)
+ 536 03a0 70E0      		ldi r23,hi8(7)
+ 537 03a2 0E94 0000 		call send_mdb
+ 538               	.LM116:
+ 539 03a6 81E0      		ldi r24,lo8(1)
+ 540 03a8 67E0      		ldi r22,lo8(263)
+ 541 03aa 71E0      		ldi r23,hi8(263)
+ 542 03ac 00C0      		rjmp .L44
+ 543               	.L38:
+ 544               	.LM117:
+ 545 03ae 8230      		cpi r24,lo8(2)
+ 546 03b0 01F0      		breq .+2
+ 547 03b2 00C0      		rjmp .L42
+ 548               	.LM118:
+ 549 03b4 81E0      		ldi r24,lo8(1)
+ 550 03b6 60E0      		ldi r22,lo8(0)
+ 551 03b8 0E94 0000 		call buffer_level
+ 552 03bc 8230      		cpi r24,lo8(2)
+ 553 03be 00F0      		brlo .L42
+ 554               	.LM119:
+ 555 03c0 81E0      		ldi r24,lo8(1)
+ 556 03c2 0E94 0000 		call recv_mdb
+ 557 03c6 892B      		or r24,r25
+ 558 03c8 01F0      		breq .L41
+ 559               	.LM120:
+ 560 03ca 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 561               	.LM121:
+ 562 03ce 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 563               	.LM122:
+ 564 03d2 1092 0000 		sts state.1858,__zero_reg__
+ 565               	.LM123:
+ 566 03d6 80E0      		ldi r24,lo8(0)
+ 567 03d8 60E0      		ldi r22,lo8(__c.1883)
+ 568 03da 70E0      		ldi r23,hi8(__c.1883)
+ 569 03dc 00C0      		rjmp .L43
+ 570               	.L47:
+ 571               	.LM124:
+ 572 03de 8091 0000 		lds r24,state.1858
+ 573 03e2 8130      		cpi r24,lo8(1)
+ 574 03e4 01F4      		brne .L40
+ 575               	.LM125:
+ 576 03e6 68E0      		ldi r22,lo8(8)
+ 577 03e8 70E0      		ldi r23,hi8(8)
+ 578 03ea 0E94 0000 		call send_mdb
+ 579               	.LM126:
+ 580 03ee 81E0      		ldi r24,lo8(1)
+ 581 03f0 68E0      		ldi r22,lo8(264)
+ 582 03f2 71E0      		ldi r23,hi8(264)
+ 583               	.L44:
+ 584 03f4 0E94 0000 		call send_mdb
+ 585               	.LM127:
+ 586 03f8 82E0      		ldi r24,lo8(2)
+ 587 03fa 8093 0000 		sts state.1858,r24
+ 588 03fe 00C0      		rjmp .L42
+ 589               	.L40:
+ 590               	.LM128:
+ 591 0400 8230      		cpi r24,lo8(2)
+ 592 0402 01F4      		brne .L42
+ 593               	.LM129:
+ 594 0404 81E0      		ldi r24,lo8(1)
+ 595 0406 60E0      		ldi r22,lo8(0)
+ 596 0408 0E94 0000 		call buffer_level
+ 597 040c 8230      		cpi r24,lo8(2)
+ 598 040e 00F0      		brlo .L42
+ 599               	.LM130:
+ 600 0410 81E0      		ldi r24,lo8(1)
+ 601 0412 0E94 0000 		call recv_mdb
+ 602 0416 892B      		or r24,r25
+ 603 0418 01F0      		breq .L41
+ 604               	.LM131:
+ 605 041a 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 606               	.LM132:
+ 607 041e 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 608               	.LM133:
+ 609 0422 1092 0000 		sts state.1858,__zero_reg__
+ 610               	.LM134:
+ 611 0426 80E0      		ldi r24,lo8(0)
+ 612 0428 60E0      		ldi r22,lo8(__c.1886)
+ 613 042a 70E0      		ldi r23,hi8(__c.1886)
+ 614 042c 00C0      		rjmp .L43
+ 615               	.L41:
+ 616               	.LM135:
+ 617 042e 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 618               	.LM136:
+ 619 0432 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 620               	.LM137:
+ 621 0436 1092 0000 		sts state.1858,__zero_reg__
+ 622               	.L42:
+ 623               	/* epilogue start */
+ 624               	.LM138:
+ 625 043a 1F91      		pop r17
+ 626 043c 0F91      		pop r16
+ 627 043e 0895      		ret
+ 628               	.LFE6:
+ 630               	.global	mdb_setup
+ 632               	mdb_setup:
+ 633               	.LFB5:
+ 634               	.LM139:
+ 635 0440 EF92      		push r14
+ 636 0442 FF92      		push r15
+ 637 0444 0F93      		push r16
+ 638 0446 1F93      		push r17
+ 639 0448 DF93      		push r29
+ 640 044a CF93      		push r28
+ 641 044c 00D0      		rcall .
+ 642 044e 00D0      		rcall .
+ 643 0450 CDB7      		in r28,__SP_L__
+ 644 0452 DEB7      		in r29,__SP_H__
+ 645               	/* prologue: function */
+ 646               	/* frame size = 6 */
+ 647               	.LM140:
+ 648 0454 8E01      		movw r16,r28
+ 649 0456 0F5F      		subi r16,lo8(-(1))
+ 650 0458 1F4F      		sbci r17,hi8(-(1))
+ 651 045a 86E0      		ldi r24,lo8(6)
+ 652 045c F801      		movw r30,r16
+ 653 045e 1192      		st Z+,__zero_reg__
+ 654 0460 8A95      	        dec r24
+ 655 0462 01F4      		brne .-6
+ 656               	.LM141:
+ 657 0464 8091 0000 		lds r24,state.1777
+ 658 0468 8230      		cpi r24,lo8(2)
+ 659 046a 00F0      		brlo .+2
+ 660 046c 00C0      		rjmp .L49
+ 661               	.LM142:
+ 662 046e 81E0      		ldi r24,lo8(1)
+ 663 0470 60E0      		ldi r22,lo8(0)
+ 664 0472 0E94 0000 		call buffer_level
+ 665 0476 8C30      		cpi r24,lo8(12)
+ 666 0478 00F4      		brsh .+2
+ 667 047a 00C0      		rjmp .L58
+ 668               	.LM143:
+ 669 047c 87E0      		ldi r24,lo8(7)
+ 670 047e E82E      		mov r14,r24
+ 671 0480 F12C      		mov r15,__zero_reg__
+ 672 0482 EC0E      		add r14,r28
+ 673 0484 FD1E      		adc r15,r29
+ 674               	.L51:
+ 675               	.LM144:
+ 676 0486 81E0      		ldi r24,lo8(1)
+ 677 0488 0E94 0000 		call recv_mdb
+ 678 048c F801      		movw r30,r16
+ 679 048e 8193      		st Z+,r24
+ 680 0490 8F01      		movw r16,r30
+ 681               	.LM145:
+ 682 0492 EE15      		cp r30,r14
+ 683 0494 FF05      		cpc r31,r15
+ 684 0496 01F4      		brne .L51
+ 685               	.LM146:
+ 686 0498 4981      		ldd r20,Y+1
+ 687               	.LM147:
+ 688 049a 8A81      		ldd r24,Y+2
+ 689 049c 242F      		mov r18,r20
+ 690 049e 30E0      		ldi r19,lo8(0)
+ 691 04a0 280F      		add r18,r24
+ 692 04a2 311D      		adc r19,__zero_reg__
+ 693 04a4 8B81      		ldd r24,Y+3
+ 694 04a6 280F      		add r18,r24
+ 695 04a8 311D      		adc r19,__zero_reg__
+ 696 04aa 8C81      		ldd r24,Y+4
+ 697 04ac 280F      		add r18,r24
+ 698 04ae 311D      		adc r19,__zero_reg__
+ 699 04b0 8D81      		ldd r24,Y+5
+ 700 04b2 280F      		add r18,r24
+ 701 04b4 311D      		adc r19,__zero_reg__
+ 702 04b6 8091 0000 		lds r24,checksum.1776
+ 703 04ba 9091 0000 		lds r25,(checksum.1776)+1
+ 704 04be 280F      		add r18,r24
+ 705 04c0 391F      		adc r19,r25
+ 706 04c2 3070      		andi r19,hi8(255)
+ 707 04c4 3093 0000 		sts (checksum.1776)+1,r19
+ 708 04c8 2093 0000 		sts checksum.1776,r18
+ 709               	.LM148:
+ 710 04cc 8E81      		ldd r24,Y+6
+ 711 04ce 90E0      		ldi r25,lo8(0)
+ 712 04d0 2817      		cp r18,r24
+ 713 04d2 3907      		cpc r19,r25
+ 714 04d4 01F0      		breq .L52
+ 715               	.LM149:
+ 716 04d6 1092 0000 		sts state.1777,__zero_reg__
+ 717               	.LM150:
+ 718 04da 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 719               	.LM151:
+ 720 04de 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 721               	.LM152:
+ 722 04e2 81E1      		ldi r24,lo8(17)
+ 723 04e4 90E0      		ldi r25,hi8(17)
+ 724 04e6 9093 0000 		sts (checksum.1776)+1,r25
+ 725 04ea 8093 0000 		sts checksum.1776,r24
+ 726               	.LM153:
+ 727 04ee 80E0      		ldi r24,lo8(0)
+ 728 04f0 60E0      		ldi r22,lo8(__c.1783)
+ 729 04f2 70E0      		ldi r23,hi8(__c.1783)
+ 730 04f4 00C0      		rjmp .L61
+ 731               	.L52:
+ 732               	.LM154:
+ 733 04f6 4093 0000 		sts state.1777,r20
+ 734               	.L49:
+ 735               	.LM155:
+ 736 04fa 1091 0000 		lds r17,state.1777
+ 737 04fe 1130      		cpi r17,lo8(1)
+ 738 0500 01F4      		brne .+2
+ 739 0502 00C0      		rjmp .L55
+ 740 0504 1130      		cpi r17,lo8(1)
+ 741 0506 00F0      		brlo .L54
+ 742 0508 1230      		cpi r17,lo8(2)
+ 743 050a 01F0      		breq .+2
+ 744 050c 00C0      		rjmp .L60
+ 745 050e 00C0      		rjmp .L64
+ 746               	.L54:
+ 747               	.LM156:
+ 748 0510 8A81      		ldd r24,Y+2
+ 749 0512 8093 0000 		sts vmc,r24
+ 750               	.LM157:
+ 751 0516 8B81      		ldd r24,Y+3
+ 752 0518 8093 0000 		sts vmc+1,r24
+ 753               	.LM158:
+ 754 051c 8C81      		ldd r24,Y+4
+ 755 051e 8093 0000 		sts vmc+2,r24
+ 756               	.LM159:
+ 757 0522 8D81      		ldd r24,Y+5
+ 758 0524 8093 0000 		sts vmc+3,r24
+ 759               	.LM160:
+ 760 0528 6091 0000 		lds r22,cd
+ 761 052c 2091 0000 		lds r18,cd+2
+ 762 0530 8091 0000 		lds r24,cd+3
+ 763 0534 90E0      		ldi r25,lo8(0)
+ 764 0536 820F      		add r24,r18
+ 765 0538 911D      		adc r25,__zero_reg__
+ 766 053a 2091 0000 		lds r18,cd+4
+ 767 053e 820F      		add r24,r18
+ 768 0540 911D      		adc r25,__zero_reg__
+ 769 0542 2091 0000 		lds r18,cd+5
+ 770 0546 820F      		add r24,r18
+ 771 0548 911D      		adc r25,__zero_reg__
+ 772 054a 2091 0000 		lds r18,cd+6
+ 773 054e 820F      		add r24,r18
+ 774 0550 911D      		adc r25,__zero_reg__
+ 775 0552 2091 0000 		lds r18,cd+7
+ 776 0556 820F      		add r24,r18
+ 777 0558 911D      		adc r25,__zero_reg__
+ 778 055a 4091 0000 		lds r20,cd+1
+ 779 055e 262F      		mov r18,r22
+ 780 0560 30E0      		ldi r19,lo8(0)
+ 781 0562 240F      		add r18,r20
+ 782 0564 311D      		adc r19,__zero_reg__
+ 783 0566 820F      		add r24,r18
+ 784 0568 931F      		adc r25,r19
+ 785 056a 9070      		andi r25,hi8(255)
+ 786 056c 9160      		ori r25,hi8(256)
+ 787 056e 9093 0000 		sts (checksum.1776)+1,r25
+ 788 0572 8093 0000 		sts checksum.1776,r24
+ 789               	.LM161:
+ 790 0576 81E0      		ldi r24,lo8(1)
+ 791 0578 70E0      		ldi r23,lo8(0)
+ 792 057a 0E94 0000 		call send_mdb
+ 793               	.LM162:
+ 794 057e 6091 0000 		lds r22,cd+1
+ 795 0582 81E0      		ldi r24,lo8(1)
+ 796 0584 70E0      		ldi r23,lo8(0)
+ 797 0586 0E94 0000 		call send_mdb
+ 798               	.LM163:
+ 799 058a 6091 0000 		lds r22,cd+3
+ 800 058e 81E0      		ldi r24,lo8(1)
+ 801 0590 70E0      		ldi r23,lo8(0)
+ 802 0592 0E94 0000 		call send_mdb
+ 803               	.LM164:
+ 804 0596 6091 0000 		lds r22,cd+2
+ 805 059a 7091 0000 		lds r23,(cd+2)+1
+ 806 059e 7070      		andi r23,hi8(255)
+ 807 05a0 81E0      		ldi r24,lo8(1)
+ 808 05a2 0E94 0000 		call send_mdb
+ 809               	.LM165:
+ 810 05a6 6091 0000 		lds r22,cd+4
+ 811 05aa 81E0      		ldi r24,lo8(1)
+ 812 05ac 70E0      		ldi r23,lo8(0)
+ 813 05ae 0E94 0000 		call send_mdb
+ 814               	.LM166:
+ 815 05b2 6091 0000 		lds r22,cd+5
+ 816 05b6 81E0      		ldi r24,lo8(1)
+ 817 05b8 70E0      		ldi r23,lo8(0)
+ 818 05ba 0E94 0000 		call send_mdb
+ 819               	.LM167:
+ 820 05be 6091 0000 		lds r22,cd+6
+ 821 05c2 81E0      		ldi r24,lo8(1)
+ 822 05c4 70E0      		ldi r23,lo8(0)
+ 823 05c6 0E94 0000 		call send_mdb
+ 824               	.LM168:
+ 825 05ca 6091 0000 		lds r22,cd+7
+ 826 05ce 81E0      		ldi r24,lo8(1)
+ 827 05d0 70E0      		ldi r23,lo8(0)
+ 828 05d2 0E94 0000 		call send_mdb
+ 829               	.LM169:
+ 830 05d6 6091 0000 		lds r22,checksum.1776
+ 831 05da 7091 0000 		lds r23,(checksum.1776)+1
+ 832 05de 81E0      		ldi r24,lo8(1)
+ 833 05e0 0E94 0000 		call send_mdb
+ 834               	.LM170:
+ 835 05e4 82E0      		ldi r24,lo8(2)
+ 836 05e6 8093 0000 		sts state.1777,r24
+ 837               	.LM171:
+ 838 05ea 81E1      		ldi r24,lo8(17)
+ 839 05ec 90E0      		ldi r25,hi8(17)
+ 840 05ee 9093 0000 		sts (checksum.1776)+1,r25
+ 841 05f2 8093 0000 		sts checksum.1776,r24
+ 842 05f6 00C0      		rjmp .L58
+ 843               	.L55:
+ 844               	.LM172:
+ 845 05f8 9A81      		ldd r25,Y+2
+ 846 05fa 80E0      		ldi r24,lo8(0)
+ 847 05fc 2B81      		ldd r18,Y+3
+ 848 05fe 30E0      		ldi r19,lo8(0)
+ 849 0600 822B      		or r24,r18
+ 850 0602 932B      		or r25,r19
+ 851 0604 9093 0000 		sts (price)+1,r25
+ 852 0608 8093 0000 		sts price,r24
+ 853               	.LM173:
+ 854 060c 9C81      		ldd r25,Y+4
+ 855 060e 80E0      		ldi r24,lo8(0)
+ 856 0610 2D81      		ldd r18,Y+5
+ 857 0612 30E0      		ldi r19,lo8(0)
+ 858 0614 822B      		or r24,r18
+ 859 0616 932B      		or r25,r19
+ 860 0618 9093 0000 		sts (price+2)+1,r25
+ 861 061c 8093 0000 		sts price+2,r24
+ 862               	.LM174:
+ 863 0620 81E0      		ldi r24,lo8(1)
+ 864 0622 60E0      		ldi r22,lo8(256)
+ 865 0624 71E0      		ldi r23,hi8(256)
+ 866 0626 0E94 0000 		call send_mdb
+ 867               	.LM175:
+ 868 062a 1093 0000 		sts mdb_state,r17
+ 869               	.LM176:
+ 870 062e 1092 0000 		sts state.1777,__zero_reg__
+ 871               	.LM177:
+ 872 0632 81E1      		ldi r24,lo8(17)
+ 873 0634 90E0      		ldi r25,hi8(17)
+ 874 0636 9093 0000 		sts (checksum.1776)+1,r25
+ 875 063a 8093 0000 		sts checksum.1776,r24
+ 876 063e 00C0      		rjmp .L63
+ 877               	.L64:
+ 878               	.LM178:
+ 879 0640 81E0      		ldi r24,lo8(1)
+ 880 0642 60E0      		ldi r22,lo8(0)
+ 881 0644 0E94 0000 		call buffer_level
+ 882 0648 8230      		cpi r24,lo8(2)
+ 883 064a 00F0      		brlo .L58
+ 884               	.LM179:
+ 885 064c 81E0      		ldi r24,lo8(1)
+ 886 064e 0E94 0000 		call recv_mdb
+ 887               	.LM180:
+ 888 0652 8230      		cpi r24,lo8(2)
+ 889 0654 00F0      		brlo .L62
+ 890               	.LM181:
+ 891 0656 1092 0000 		sts state.1777,__zero_reg__
+ 892               	.LM182:
+ 893 065a 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 894               	.LM183:
+ 895 065e 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 896               	.LM184:
+ 897 0662 80E0      		ldi r24,lo8(0)
+ 898 0664 60E0      		ldi r22,lo8(__c.1788)
+ 899 0666 70E0      		ldi r23,hi8(__c.1788)
+ 900               	.L61:
+ 901 0668 0E94 0000 		call send_str_p
+ 902 066c 00C0      		rjmp .L58
+ 903               	.L60:
+ 904               	.LM185:
+ 905 066e 80E0      		ldi r24,lo8(0)
+ 906 0670 60E0      		ldi r22,lo8(__c.1791)
+ 907 0672 70E0      		ldi r23,hi8(__c.1791)
+ 908 0674 0E94 0000 		call send_str_p
+ 909               	.L62:
+ 910               	.LM186:
+ 911 0678 1092 0000 		sts state.1777,__zero_reg__
+ 912               	.L63:
+ 913               	.LM187:
+ 914 067c 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 915               	.LM188:
+ 916 0680 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 917               	.L58:
+ 918               	/* epilogue start */
+ 919               	.LM189:
+ 920 0684 2696      		adiw r28,6
+ 921 0686 0FB6      		in __tmp_reg__,__SREG__
+ 922 0688 F894      		cli
+ 923 068a DEBF      		out __SP_H__,r29
+ 924 068c 0FBE      		out __SREG__,__tmp_reg__
+ 925 068e CDBF      		out __SP_L__,r28
+ 926 0690 CF91      		pop r28
+ 927 0692 DF91      		pop r29
+ 928 0694 1F91      		pop r17
+ 929 0696 0F91      		pop r16
+ 930 0698 FF90      		pop r15
+ 931 069a EF90      		pop r14
+ 932 069c 0895      		ret
+ 933               	.LFE5:
+ 935               	.global	mdb_reset
+ 937               	mdb_reset:
+ 938               	.LFB4:
+ 939               	.LM190:
+ 940               	/* prologue: function */
+ 941               	/* frame size = 0 */
+ 942               	.LM191:
+ 943 069e 81E0      		ldi r24,lo8(1)
+ 944 06a0 60E0      		ldi r22,lo8(0)
+ 945 06a2 0E94 0000 		call buffer_level
+ 946 06a6 8230      		cpi r24,lo8(2)
+ 947 06a8 00F0      		brlo .L68
+ 948               	.LM192:
+ 949 06aa 81E0      		ldi r24,lo8(1)
+ 950 06ac 0E94 0000 		call recv_mdb
+ 951 06b0 4097      		sbiw r24,16
+ 952 06b2 01F0      		breq .L67
+ 953               	.LM193:
+ 954 06b4 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 955               	.LM194:
+ 956 06b8 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 957               	.LM195:
+ 958 06bc 80E0      		ldi r24,lo8(0)
+ 959 06be 60E0      		ldi r22,lo8(__c.1769)
+ 960 06c0 70E0      		ldi r23,hi8(__c.1769)
+ 961 06c2 0E94 0000 		call send_str_p
+ 962 06c6 0895      		ret
+ 963               	.L67:
+ 964               	.LM196:
+ 965 06c8 1092 0000 		sts vmc,__zero_reg__
+ 966               	.LM197:
+ 967 06cc 1092 0000 		sts vmc+1,__zero_reg__
+ 968               	.LM198:
+ 969 06d0 1092 0000 		sts vmc+2,__zero_reg__
+ 970               	.LM199:
+ 971 06d4 1092 0000 		sts vmc+3,__zero_reg__
+ 972               	.LM200:
+ 973 06d8 1092 0000 		sts (price)+1,__zero_reg__
+ 974 06dc 1092 0000 		sts price,__zero_reg__
+ 975               	.LM201:
+ 976 06e0 1092 0000 		sts (price+2)+1,__zero_reg__
+ 977 06e4 1092 0000 		sts price+2,__zero_reg__
+ 978               	.LM202:
+ 979 06e8 81E0      		ldi r24,lo8(1)
+ 980 06ea 60E0      		ldi r22,lo8(256)
+ 981 06ec 71E0      		ldi r23,hi8(256)
+ 982 06ee 0E94 0000 		call send_mdb
+ 983               	.LM203:
+ 984 06f2 81E0      		ldi r24,lo8(1)
+ 985 06f4 8093 0000 		sts reset_done,r24
+ 986               	.LM204:
+ 987 06f8 1092 0000 		sts mdb_state,__zero_reg__
+ 988               	.LM205:
+ 989 06fc 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 990               	.LM206:
+ 991 0700 8093 0000 		sts mdb_poll_reply,r24
+ 992               	.L68:
+ 993 0704 0895      		ret
+ 994               	.LFE4:
+ 996               		.data
+ 997               	.LC0:
+ 998 0000 5652 4551 		.string	"VREQ %d %d\r\n"
+ 998      2025 6420 
+ 998      2564 0D0A 
+ 998      00
+ 999               	.LC1:
+ 1000 000d 5653 5543 		.string	"VSUCC %d\r\n"
+ 1000      4320 2564 
+ 1000      0D0A 00
+ 1001               		.text
+ 1002               	.global	mdb_vend
+ 1004               	mdb_vend:
+ 1005               	.LFB7:
+ 1006               	.LM207:
+ 1007 0706 0F93      		push r16
+ 1008 0708 1F93      		push r17
+ 1009 070a DF93      		push r29
+ 1010 070c CF93      		push r28
+ 1011 070e CDB7      		in r28,__SP_L__
+ 1012 0710 DEB7      		in r29,__SP_H__
+ 1013 0712 A897      		sbiw r28,40
+ 1014 0714 0FB6      		in __tmp_reg__,__SREG__
+ 1015 0716 F894      		cli
+ 1016 0718 DEBF      		out __SP_H__,r29
+ 1017 071a 0FBE      		out __SREG__,__tmp_reg__
+ 1018 071c CDBF      		out __SP_L__,r28
+ 1019               	/* prologue: function */
+ 1020               	/* frame size = 40 */
+ 1021               	.LM208:
+ 1022 071e 8091 0000 		lds r24,state.1933
+ 1023 0722 8823      		tst r24
+ 1024 0724 01F4      		brne .L70
+ 1025               	.LM209:
+ 1026 0726 81E0      		ldi r24,lo8(1)
+ 1027 0728 60E0      		ldi r22,lo8(0)
+ 1028 072a 0E94 0000 		call buffer_level
+ 1029 072e 8230      		cpi r24,lo8(2)
+ 1030 0730 00F4      		brsh .+2
+ 1031 0732 00C0      		rjmp .L84
+ 1032               	.LM210:
+ 1033 0734 81E0      		ldi r24,lo8(1)
+ 1034 0736 0E94 0000 		call recv_mdb
+ 1035 073a 8093 0000 		sts data.1932,r24
+ 1036               	.LM211:
+ 1037 073e 81E0      		ldi r24,lo8(1)
+ 1038 0740 8093 0000 		sts state.1933,r24
+ 1039               	.L70:
+ 1040               	.LM212:
+ 1041 0744 8091 0000 		lds r24,data.1932
+ 1042 0748 8230      		cpi r24,lo8(2)
+ 1043 074a 01F4      		brne .+2
+ 1044 074c 00C0      		rjmp .L74
+ 1045 074e 8330      		cpi r24,lo8(3)
+ 1046 0750 00F4      		brsh .L77
+ 1047 0752 8823      		tst r24
+ 1048 0754 01F0      		breq .L72
+ 1049 0756 8130      		cpi r24,lo8(1)
+ 1050 0758 01F0      		breq .+2
+ 1051 075a 00C0      		rjmp .L84
+ 1052 075c 00C0      		rjmp .L89
+ 1053               	.L77:
+ 1054 075e 8330      		cpi r24,lo8(3)
+ 1055 0760 01F4      		brne .+2
+ 1056 0762 00C0      		rjmp .L75
+ 1057 0764 8430      		cpi r24,lo8(4)
+ 1058 0766 01F0      		breq .+2
+ 1059 0768 00C0      		rjmp .L84
+ 1060 076a 00C0      		rjmp .L90
+ 1061               	.L72:
+ 1062               	.LM213:
+ 1063 076c 81E0      		ldi r24,lo8(1)
+ 1064 076e 60E0      		ldi r22,lo8(0)
+ 1065 0770 0E94 0000 		call buffer_level
+ 1066 0774 8A30      		cpi r24,lo8(10)
+ 1067 0776 00F4      		brsh .+2
+ 1068 0778 00C0      		rjmp .L84
+ 1069 077a 00E0      		ldi r16,lo8(data.1932+1)
+ 1070 077c 10E0      		ldi r17,hi8(data.1932+1)
+ 1071               	.L78:
+ 1072               	.LBB3:
+ 1073               	.LM214:
+ 1074 077e 81E0      		ldi r24,lo8(1)
+ 1075 0780 0E94 0000 		call recv_mdb
+ 1076 0784 D801      		movw r26,r16
+ 1077 0786 8D93      		st X+,r24
+ 1078 0788 8D01      		movw r16,r26
+ 1079               	.LM215:
+ 1080 078a B0E0      		ldi r27,hi8(data.1932+6)
+ 1081 078c 0030      		cpi r16,lo8(data.1932+6)
+ 1082 078e 1B07      		cpc r17,r27
+ 1083 0790 01F4      		brne .L78
+ 1084               	.LBE3:
+ 1085               	.LM216:
+ 1086 0792 2091 0000 		lds r18,data.1932+1
+ 1087 0796 3091 0000 		lds r19,data.1932+2
+ 1088 079a 5091 0000 		lds r21,data.1932+3
+ 1089 079e 4091 0000 		lds r20,data.1932+4
+ 1090               	.LM217:
+ 1091 07a2 8091 0000 		lds r24,data.1932
+ 1092 07a6 820F      		add r24,r18
+ 1093 07a8 8D5E      		subi r24,lo8(-(19))
+ 1094 07aa 830F      		add r24,r19
+ 1095 07ac 850F      		add r24,r21
+ 1096 07ae 840F      		add r24,r20
+ 1097 07b0 9091 0000 		lds r25,data.1932+5
+ 1098 07b4 8917      		cp r24,r25
+ 1099 07b6 01F0      		breq .L79
+ 1100               	.LM218:
+ 1101 07b8 1092 0000 		sts state.1933,__zero_reg__
+ 1102               	.LM219:
+ 1103 07bc 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1104               	.LM220:
+ 1105 07c0 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 1106               	.LM221:
+ 1107 07c4 80E0      		ldi r24,lo8(0)
+ 1108 07c6 60E0      		ldi r22,lo8(__c.1941)
+ 1109 07c8 70E0      		ldi r23,hi8(__c.1941)
+ 1110 07ca 00C0      		rjmp .L87
+ 1111               	.L79:
+ 1112               	.LM222:
+ 1113 07cc EDB7      		in r30,__SP_L__
+ 1114 07ce FEB7      		in r31,__SP_H__
+ 1115 07d0 3897      		sbiw r30,8
+ 1116 07d2 0FB6      		in __tmp_reg__,__SREG__
+ 1117 07d4 F894      		cli
+ 1118 07d6 FEBF      		out __SP_H__,r31
+ 1119 07d8 0FBE      		out __SREG__,__tmp_reg__
+ 1120 07da EDBF      		out __SP_L__,r30
+ 1121 07dc 3196      		adiw r30,1
+ 1122 07de 8E01      		movw r16,r28
+ 1123 07e0 0F5F      		subi r16,lo8(-(1))
+ 1124 07e2 1F4F      		sbci r17,hi8(-(1))
+ 1125 07e4 ADB7      		in r26,__SP_L__
+ 1126 07e6 BEB7      		in r27,__SP_H__
+ 1127 07e8 1296      		adiw r26,1+1
+ 1128 07ea 1C93      		st X,r17
+ 1129 07ec 0E93      		st -X,r16
+ 1130 07ee 1197      		sbiw r26,1
+ 1131 07f0 80E0      		ldi r24,lo8(.LC0)
+ 1132 07f2 90E0      		ldi r25,hi8(.LC0)
+ 1133 07f4 9383      		std Z+3,r25
+ 1134 07f6 8283      		std Z+2,r24
+ 1135 07f8 922F      		mov r25,r18
+ 1136 07fa 80E0      		ldi r24,lo8(0)
+ 1137 07fc 830F      		add r24,r19
+ 1138 07fe 911D      		adc r25,__zero_reg__
+ 1139 0800 9583      		std Z+5,r25
+ 1140 0802 8483      		std Z+4,r24
+ 1141 0804 852F      		mov r24,r21
+ 1142 0806 90E0      		ldi r25,lo8(0)
+ 1143 0808 840F      		add r24,r20
+ 1144 080a 911D      		adc r25,__zero_reg__
+ 1145 080c 9783      		std Z+7,r25
+ 1146 080e 8683      		std Z+6,r24
+ 1147 0810 0E94 0000 		call sprintf
+ 1148               	.LM223:
+ 1149 0814 EDB7      		in r30,__SP_L__
+ 1150 0816 FEB7      		in r31,__SP_H__
+ 1151 0818 3896      		adiw r30,8
+ 1152 081a 0FB6      		in __tmp_reg__,__SREG__
+ 1153 081c F894      		cli
+ 1154 081e FEBF      		out __SP_H__,r31
+ 1155 0820 0FBE      		out __SREG__,__tmp_reg__
+ 1156 0822 EDBF      		out __SP_L__,r30
+ 1157 0824 80E0      		ldi r24,lo8(0)
+ 1158 0826 B801      		movw r22,r16
+ 1159 0828 0E94 0000 		call send_str
+ 1160               	.LM224:
+ 1161 082c 81E0      		ldi r24,lo8(1)
+ 1162 082e 60E0      		ldi r22,lo8(256)
+ 1163 0830 71E0      		ldi r23,hi8(256)
+ 1164 0832 0E94 0000 		call send_mdb
+ 1165               	.LM225:
+ 1166 0836 1092 0000 		sts state.1933,__zero_reg__
+ 1167               	.LM226:
+ 1168 083a 84E0      		ldi r24,lo8(4)
+ 1169 083c 00C0      		rjmp .L88
+ 1170               	.L89:
+ 1171               	.LM227:
+ 1172 083e 81E0      		ldi r24,lo8(1)
+ 1173 0840 60E0      		ldi r22,lo8(0)
+ 1174 0842 0E94 0000 		call buffer_level
+ 1175 0846 8230      		cpi r24,lo8(2)
+ 1176 0848 00F4      		brsh .+2
+ 1177 084a 00C0      		rjmp .L84
+ 1178               	.LM228:
+ 1179 084c 81E0      		ldi r24,lo8(1)
+ 1180 084e 0E94 0000 		call recv_mdb
+ 1181 0852 8093 0000 		sts data.1932+1,r24
+ 1182               	.LM229:
+ 1183 0856 9091 0000 		lds r25,data.1932
+ 1184 085a 9D5E      		subi r25,lo8(-(19))
+ 1185 085c 9817      		cp r25,r24
+ 1186 085e 01F0      		breq .L80
+ 1187               	.LM230:
+ 1188 0860 1092 0000 		sts state.1933,__zero_reg__
+ 1189               	.LM231:
+ 1190 0864 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1191               	.LM232:
+ 1192 0868 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 1193               	.LM233:
+ 1194 086c 80E0      		ldi r24,lo8(0)
+ 1195 086e 60E0      		ldi r22,lo8(__c.1944)
+ 1196 0870 70E0      		ldi r23,hi8(__c.1944)
+ 1197 0872 00C0      		rjmp .L87
+ 1198               	.L80:
+ 1199               	.LM234:
+ 1200 0874 80E0      		ldi r24,lo8(0)
+ 1201 0876 60E0      		ldi r22,lo8(__c.1946)
+ 1202 0878 70E0      		ldi r23,hi8(__c.1946)
+ 1203 087a 0E94 0000 		call send_str_p
+ 1204               	.LM235:
+ 1205 087e 81E0      		ldi r24,lo8(1)
+ 1206 0880 60E0      		ldi r22,lo8(256)
+ 1207 0882 71E0      		ldi r23,hi8(256)
+ 1208 0884 0E94 0000 		call send_mdb
+ 1209               	.LM236:
+ 1210 0888 1092 0000 		sts state.1933,__zero_reg__
+ 1211               	.LM237:
+ 1212 088c 83E0      		ldi r24,lo8(3)
+ 1213 088e 8093 0000 		sts mdb_state,r24
+ 1214               	.LM238:
+ 1215 0892 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1216               	.LM239:
+ 1217 0896 87E0      		ldi r24,lo8(7)
+ 1218 0898 8093 0000 		sts mdb_poll_reply,r24
+ 1219 089c 00C0      		rjmp .L84
+ 1220               	.L74:
+ 1221               	.LM240:
+ 1222 089e 81E0      		ldi r24,lo8(1)
+ 1223 08a0 60E0      		ldi r22,lo8(0)
+ 1224 08a2 0E94 0000 		call buffer_level
+ 1225 08a6 8630      		cpi r24,lo8(6)
+ 1226 08a8 00F4      		brsh .+2
+ 1227 08aa 00C0      		rjmp .L84
+ 1228               	.LBB4:
+ 1229               	.LM241:
+ 1230 08ac 81E0      		ldi r24,lo8(1)
+ 1231 08ae 0E94 0000 		call recv_mdb
+ 1232 08b2 8093 0000 		sts data.1932+1,r24
+ 1233 08b6 81E0      		ldi r24,lo8(1)
+ 1234 08b8 0E94 0000 		call recv_mdb
+ 1235 08bc 8093 0000 		sts data.1932+2,r24
+ 1236 08c0 81E0      		ldi r24,lo8(1)
+ 1237 08c2 0E94 0000 		call recv_mdb
+ 1238 08c6 8093 0000 		sts data.1932+3,r24
+ 1239               	.LBE4:
+ 1240               	.LM242:
+ 1241 08ca 3091 0000 		lds r19,data.1932+1
+ 1242 08ce 2091 0000 		lds r18,data.1932+2
+ 1243               	.LM243:
+ 1244 08d2 9091 0000 		lds r25,data.1932
+ 1245 08d6 930F      		add r25,r19
+ 1246 08d8 9D5E      		subi r25,lo8(-(19))
+ 1247 08da 920F      		add r25,r18
+ 1248 08dc 9817      		cp r25,r24
+ 1249 08de 01F0      		breq .L81
+ 1250               	.LM244:
+ 1251 08e0 1092 0000 		sts state.1933,__zero_reg__
+ 1252               	.LM245:
+ 1253 08e4 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1254               	.LM246:
+ 1255 08e8 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 1256               	.LM247:
+ 1257 08ec 80E0      		ldi r24,lo8(0)
+ 1258 08ee 60E0      		ldi r22,lo8(__c.1953)
+ 1259 08f0 70E0      		ldi r23,hi8(__c.1953)
+ 1260 08f2 00C0      		rjmp .L87
+ 1261               	.L81:
+ 1262               	.LM248:
+ 1263 08f4 00D0      		rcall .
+ 1264 08f6 00D0      		rcall .
+ 1265 08f8 EDB7      		in r30,__SP_L__
+ 1266 08fa FEB7      		in r31,__SP_H__
+ 1267 08fc 3196      		adiw r30,1
+ 1268 08fe 8E01      		movw r16,r28
+ 1269 0900 0F5F      		subi r16,lo8(-(1))
+ 1270 0902 1F4F      		sbci r17,hi8(-(1))
+ 1271 0904 ADB7      		in r26,__SP_L__
+ 1272 0906 BEB7      		in r27,__SP_H__
+ 1273 0908 1296      		adiw r26,1+1
+ 1274 090a 1C93      		st X,r17
+ 1275 090c 0E93      		st -X,r16
+ 1276 090e 1197      		sbiw r26,1
+ 1277 0910 80E0      		ldi r24,lo8(.LC1)
+ 1278 0912 90E0      		ldi r25,hi8(.LC1)
+ 1279 0914 9383      		std Z+3,r25
+ 1280 0916 8283      		std Z+2,r24
+ 1281 0918 832F      		mov r24,r19
+ 1282 091a 90E0      		ldi r25,lo8(0)
+ 1283 091c 820F      		add r24,r18
+ 1284 091e 911D      		adc r25,__zero_reg__
+ 1285 0920 9583      		std Z+5,r25
+ 1286 0922 8483      		std Z+4,r24
+ 1287 0924 0E94 0000 		call sprintf
+ 1288               	.LM249:
+ 1289 0928 EDB7      		in r30,__SP_L__
+ 1290 092a FEB7      		in r31,__SP_H__
+ 1291 092c 3696      		adiw r30,6
+ 1292 092e 0FB6      		in __tmp_reg__,__SREG__
+ 1293 0930 F894      		cli
+ 1294 0932 FEBF      		out __SP_H__,r31
+ 1295 0934 0FBE      		out __SREG__,__tmp_reg__
+ 1296 0936 EDBF      		out __SP_L__,r30
+ 1297 0938 80E0      		ldi r24,lo8(0)
+ 1298 093a B801      		movw r22,r16
+ 1299 093c 0E94 0000 		call send_str
+ 1300               	.LM250:
+ 1301 0940 81E0      		ldi r24,lo8(1)
+ 1302 0942 60E0      		ldi r22,lo8(256)
+ 1303 0944 71E0      		ldi r23,hi8(256)
+ 1304 0946 0E94 0000 		call send_mdb
+ 1305               	.LM251:
+ 1306 094a 1092 0000 		sts state.1933,__zero_reg__
+ 1307               	.LM252:
+ 1308 094e 83E0      		ldi r24,lo8(3)
+ 1309 0950 00C0      		rjmp .L88
+ 1310               	.L75:
+ 1311               	.LM253:
+ 1312 0952 81E0      		ldi r24,lo8(1)
+ 1313 0954 60E0      		ldi r22,lo8(0)
+ 1314 0956 0E94 0000 		call buffer_level
+ 1315 095a 8230      		cpi r24,lo8(2)
+ 1316 095c 00F4      		brsh .+2
+ 1317 095e 00C0      		rjmp .L84
+ 1318               	.LM254:
+ 1319 0960 81E0      		ldi r24,lo8(1)
+ 1320 0962 0E94 0000 		call recv_mdb
+ 1321 0966 8093 0000 		sts data.1932+1,r24
+ 1322               	.LM255:
+ 1323 096a 9091 0000 		lds r25,data.1932
+ 1324 096e 9D5E      		subi r25,lo8(-(19))
+ 1325 0970 9817      		cp r25,r24
+ 1326 0972 01F0      		breq .L82
+ 1327               	.LM256:
+ 1328 0974 1092 0000 		sts state.1933,__zero_reg__
+ 1329               	.LM257:
+ 1330 0978 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1331               	.LM258:
+ 1332 097c 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 1333               	.LM259:
+ 1334 0980 80E0      		ldi r24,lo8(0)
+ 1335 0982 60E0      		ldi r22,lo8(__c.1956)
+ 1336 0984 70E0      		ldi r23,hi8(__c.1956)
+ 1337 0986 00C0      		rjmp .L87
+ 1338               	.L82:
+ 1339               	.LM260:
+ 1340 0988 80E0      		ldi r24,lo8(0)
+ 1341 098a 60E0      		ldi r22,lo8(__c.1958)
+ 1342 098c 70E0      		ldi r23,hi8(__c.1958)
+ 1343 098e 00C0      		rjmp .L86
+ 1344               	.L90:
+ 1345               	.LM261:
+ 1346 0990 81E0      		ldi r24,lo8(1)
+ 1347 0992 60E0      		ldi r22,lo8(0)
+ 1348 0994 0E94 0000 		call buffer_level
+ 1349 0998 8230      		cpi r24,lo8(2)
+ 1350 099a 00F0      		brlo .L84
+ 1351               	.LM262:
+ 1352 099c 81E0      		ldi r24,lo8(1)
+ 1353 099e 0E94 0000 		call recv_mdb
+ 1354 09a2 8093 0000 		sts data.1932+1,r24
+ 1355               	.LM263:
+ 1356 09a6 9091 0000 		lds r25,data.1932
+ 1357 09aa 9D5E      		subi r25,lo8(-(19))
+ 1358 09ac 9817      		cp r25,r24
+ 1359 09ae 01F0      		breq .L83
+ 1360               	.LM264:
+ 1361 09b0 1092 0000 		sts state.1933,__zero_reg__
+ 1362               	.LM265:
+ 1363 09b4 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1364               	.LM266:
+ 1365 09b8 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 1366               	.LM267:
+ 1367 09bc 80E0      		ldi r24,lo8(0)
+ 1368 09be 60E0      		ldi r22,lo8(__c.1961)
+ 1369 09c0 70E0      		ldi r23,hi8(__c.1961)
+ 1370               	.L87:
+ 1371 09c2 0E94 0000 		call send_str_p
+ 1372 09c6 00C0      		rjmp .L84
+ 1373               	.L83:
+ 1374               	.LM268:
+ 1375 09c8 80E0      		ldi r24,lo8(0)
+ 1376 09ca 60E0      		ldi r22,lo8(__c.1963)
+ 1377 09cc 70E0      		ldi r23,hi8(__c.1963)
+ 1378               	.L86:
+ 1379 09ce 0E94 0000 		call send_str_p
+ 1380               	.LM269:
+ 1381 09d2 81E0      		ldi r24,lo8(1)
+ 1382 09d4 60E0      		ldi r22,lo8(256)
+ 1383 09d6 71E0      		ldi r23,hi8(256)
+ 1384 09d8 0E94 0000 		call send_mdb
+ 1385               	.LM270:
+ 1386 09dc 1092 0000 		sts state.1933,__zero_reg__
+ 1387               	.LM271:
+ 1388 09e0 82E0      		ldi r24,lo8(2)
+ 1389               	.L88:
+ 1390 09e2 8093 0000 		sts mdb_state,r24
+ 1391               	.LM272:
+ 1392 09e6 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1393               	.LM273:
+ 1394 09ea 1092 0000 		sts mdb_poll_reply,__zero_reg__
+ 1395               	.L84:
+ 1396               	/* epilogue start */
+ 1397               	.LM274:
+ 1398 09ee A896      		adiw r28,40
+ 1399 09f0 0FB6      		in __tmp_reg__,__SREG__
+ 1400 09f2 F894      		cli
+ 1401 09f4 DEBF      		out __SP_H__,r29
+ 1402 09f6 0FBE      		out __SREG__,__tmp_reg__
+ 1403 09f8 CDBF      		out __SP_L__,r28
+ 1404 09fa CF91      		pop r28
+ 1405 09fc DF91      		pop r29
+ 1406 09fe 1F91      		pop r17
+ 1407 0a00 0F91      		pop r16
+ 1408 0a02 0895      		ret
+ 1409               	.LFE7:
+ 1411               	.global	mdb_cmd_handler
+ 1413               	mdb_cmd_handler:
+ 1414               	.LFB3:
+ 1415               	.LM275:
+ 1416               	/* prologue: function */
+ 1417               	/* frame size = 0 */
+ 1418               	.LM276:
+ 1419 0a04 8091 0000 		lds r24,mdb_active_cmd
+ 1420 0a08 8131      		cpi r24,lo8(17)
+ 1421 0a0a 01F0      		breq .L95
+ 1422 0a0c 8231      		cpi r24,lo8(18)
+ 1423 0a0e 00F4      		brsh .L99
+ 1424 0a10 8823      		tst r24
+ 1425 0a12 01F0      		breq .L93
+ 1426 0a14 8031      		cpi r24,lo8(16)
+ 1427 0a16 01F4      		brne .L100
+ 1428 0a18 00C0      		rjmp .L101
+ 1429               	.L99:
+ 1430 0a1a 8331      		cpi r24,lo8(19)
+ 1431 0a1c 01F0      		breq .L97
+ 1432 0a1e 8331      		cpi r24,lo8(19)
+ 1433 0a20 00F0      		brlo .L96
+ 1434 0a22 8431      		cpi r24,lo8(20)
+ 1435 0a24 01F4      		brne .L100
+ 1436 0a26 00C0      		rjmp .L102
+ 1437               	.L93:
+ 1438               	.LBB5:
+ 1439               	.LM277:
+ 1440 0a28 81E0      		ldi r24,lo8(1)
+ 1441 0a2a 60E0      		ldi r22,lo8(0)
+ 1442 0a2c 0E94 0000 		call buffer_level
+ 1443 0a30 8230      		cpi r24,lo8(2)
+ 1444 0a32 00F0      		brlo .L100
+ 1445               	.LM278:
+ 1446 0a34 81E0      		ldi r24,lo8(1)
+ 1447 0a36 0E94 0000 		call recv_mdb
+ 1448               	.LM279:
+ 1449 0a3a 90FF      		sbrs r25,0
+ 1450 0a3c 00C0      		rjmp .L100
+ 1451               	.LVL0:
+ 1452 0a3e 20E0      		ldi r18,lo8(256)
+ 1453 0a40 31E0      		ldi r19,hi8(256)
+ 1454 0a42 2827      		eor r18,r24
+ 1455 0a44 3927      		eor r19,r25
+ 1456 0a46 2031      		cpi r18,16
+ 1457 0a48 3105      		cpc r19,__zero_reg__
+ 1458 0a4a 00F0      		brlo .L100
+ 1459 0a4c 2531      		cpi r18,21
+ 1460 0a4e 3105      		cpc r19,__zero_reg__
+ 1461 0a50 00F4      		brsh .L100
+ 1462               	.LM280:
+ 1463 0a52 282F      		mov r18,r24
+ 1464 0a54 8093 0000 		sts mdb_active_cmd,r24
+ 1465               	.LM281:
+ 1466 0a58 8091 0000 		lds r24,reset_done
+ 1467               	.LVL1:
+ 1468 0a5c 8823      		tst r24
+ 1469 0a5e 01F4      		brne .L100
+ 1470 0a60 2031      		cpi r18,lo8(16)
+ 1471 0a62 01F0      		breq .L100
+ 1472               	.LM282:
+ 1473 0a64 1092 0000 		sts mdb_active_cmd,__zero_reg__
+ 1474 0a68 0895      		ret
+ 1475               	.L101:
+ 1476               	.LM283:
+ 1477 0a6a 0E94 0000 		call mdb_reset
+ 1478 0a6e 0895      		ret
+ 1479               	.L95:
+ 1480               	.LM284:
+ 1481 0a70 0E94 0000 		call mdb_setup
+ 1482 0a74 0895      		ret
+ 1483               	.L96:
+ 1484               	.LM285:
+ 1485 0a76 0E94 0000 		call mdb_poll
+ 1486 0a7a 0895      		ret
+ 1487               	.L97:
+ 1488               	.LM286:
+ 1489 0a7c 0E94 0000 		call mdb_vend
+ 1490 0a80 0895      		ret
+ 1491               	.L102:
+ 1492               	.LM287:
+ 1493 0a82 0E94 0000 		call mdb_reader
+ 1494               	.LVL2:
+ 1495               	.L100:
+ 1496 0a86 0895      		ret
+ 1497               	.LBE5:
+ 1498               	.LFE3:
+ 1500               	.global	mdb_state
+ 1501               	.global	mdb_state
+ 1502               		.section .bss
+ 1505               	mdb_state:
+ 1506 0000 00        		.skip 1,0
+ 1507               	.global	mdb_poll_reply
+ 1508               	.global	mdb_poll_reply
+ 1511               	mdb_poll_reply:
+ 1512 0001 00        		.skip 1,0
+ 1513               	.global	mdb_active_cmd
+ 1514               	.global	mdb_active_cmd
+ 1517               	mdb_active_cmd:
+ 1518 0002 00        		.skip 1,0
+ 1519               	.global	reset_done
+ 1520               	.global	reset_done
+ 1523               	reset_done:
+ 1524 0003 00        		.skip 1,0
+ 1525               	.global	vmc
+ 1526               	.global	vmc
+ 1529               	vmc:
+ 1530 0004 0000 0000 		.skip 4,0
+ 1531               	.global	price
+ 1532               	.global	price
+ 1535               	price:
+ 1536 0008 0000 0000 		.skip 4,0
+ 1537               	.global	cd
+ 1538               		.data
+ 1541               	cd:
+ 1542 0018 01        		.byte	1
+ 1543 0019 01        		.byte	1
+ 1544 001a 7819      		.word	6520
+ 1545 001c 01        		.byte	1
+ 1546 001d 02        		.byte	2
+ 1547 001e 05        		.byte	5
+ 1548 001f 00        		.byte	0
+ 1549               	.global	session
+ 1550               	.global	session
+ 1551               		.section .bss
+ 1554               	session:
+ 1555 000c 0000 0000 		.skip 7,0
+ 1555      0000 00
+ 1556               		.section	.progmem.data,"a",@progbits
+ 1559               	__c.2025:
+ 1560 0000 4572 726F 		.string	"Error: unknown subcommand [READER]\r\n"
+ 1560      723A 2075 
+ 1560      6E6B 6E6F 
+ 1560      776E 2073 
+ 1560      7562 636F 
+ 1563               	__c.2022:
+ 1564 0025 4572 726F 		.string	"Error: checksum error [READER]\r\n"
+ 1564      723A 2063 
+ 1564      6865 636B 
+ 1564      7375 6D20 
+ 1564      6572 726F 
+ 1567               	__c.2019:
+ 1568 0046 4572 726F 		.string	"Error: checksum error [READER]\r\n"
+ 1568      723A 2063 
+ 1568      6865 636B 
+ 1568      7375 6D20 
+ 1568      6572 726F 
+ 1571               	__c.2015:
+ 1572 0067 4572 726F 		.string	"Error: checksum error [READER]\r\n"
+ 1572      723A 2063 
+ 1572      6865 636B 
+ 1572      7375 6D20 
+ 1572      6572 726F 
+ 1575               	__c.1963:
+ 1576 0088 7365 7373 		.string	"session-complete\r\n"
+ 1576      696F 6E2D 
+ 1576      636F 6D70 
+ 1576      6C65 7465 
+ 1576      0D0A 00
+ 1579               	__c.1961:
+ 1580 009b 4572 726F 		.string	"Error: invalid checksum [VEND]\r\n"
+ 1580      723A 2069 
+ 1580      6E76 616C 
+ 1580      6964 2063 
+ 1580      6865 636B 
+ 1583               	__c.1958:
+ 1584 00bc 5646 4149 		.string	"VFAIL\r\n"
+ 1584      4C0D 0A00 
+ 1587               	__c.1956:
+ 1588 00c4 4572 726F 		.string	"Error: invalid checksum [VEND]\r\n"
+ 1588      723A 2069 
+ 1588      6E76 616C 
+ 1588      6964 2063 
+ 1588      6865 636B 
+ 1591               	__c.1953:
+ 1592 00e5 4572 726F 		.string	"Error: invalid checksum [VEND]\r\n"
+ 1592      723A 2069 
+ 1592      6E76 616C 
+ 1592      6964 2063 
+ 1592      6865 636B 
+ 1595               	__c.1946:
+ 1596 0106 5643 414E 		.string	"VCAN\r\n"
+ 1596      0D0A 00
+ 1599               	__c.1944:
+ 1600 010d 4572 726F 		.string	"Error: invalid checksum [VEND]\r\n"
+ 1600      723A 2069 
+ 1600      6E76 616C 
+ 1600      6964 2063 
+ 1600      6865 636B 
+ 1603               	__c.1941:
+ 1604 012e 4572 726F 		.string	"Error: invalid checksum [VEND]\r\n"
+ 1604      723A 2069 
+ 1604      6E76 616C 
+ 1604      6964 2063 
+ 1604      6865 636B 
+ 1605               		.lcomm state.1933,1
+ 1606               		.lcomm data.1932,6
+ 1609               	__c.1886:
+ 1610 014f 4572 726F 		.string	"Error: no ACK received on [REPLY CANCELED]\r\n"
+ 1610      723A 206E 
+ 1610      6F20 4143 
+ 1610      4B20 7265 
+ 1610      6365 6976 
+ 1613               	__c.1883:
+ 1614 017c 4572 726F 		.string	"Error: no ACK received on [END SESSION]\r\n"
+ 1614      723A 206E 
+ 1614      6F20 4143 
+ 1614      4B20 7265 
+ 1614      6365 6976 
+ 1617               	__c.1880:
+ 1618 01a6 4572 726F 		.string	"Error: no ACK received on [VEND DENY]\r\n"
+ 1618      723A 206E 
+ 1618      6F20 4143 
+ 1618      4B20 7265 
+ 1618      6365 6976 
+ 1621               	__c.1877:
+ 1622 01ce 4572 726F 		.string	"Error: no ACK received on [VEND APPROVE]\r\n"
+ 1622      723A 206E 
+ 1622      6F20 4143 
+ 1622      4B20 7265 
+ 1622      6365 6976 
+ 1625               	__c.1874:
+ 1626 01f9 4572 726F 		.string	"Error: no ACK received on [SESSION CANCEL REQ]\r\n"
+ 1626      723A 206E 
+ 1626      6F20 4143 
+ 1626      4B20 7265 
+ 1626      6365 6976 
+ 1629               	__c.1871:
+ 1630 022a 4572 726F 		.string	"Error: no ACK received on [START SESSION]\r\n"
+ 1630      723A 206E 
+ 1630      6F20 4143 
+ 1630      4B20 7265 
+ 1630      6365 6976 
+ 1633               	__c.1865:
+ 1634 0256 4572 726F 		.string	"Error: no ACK received on [JUST RESET]\r\n"
+ 1634      723A 206E 
+ 1634      6F20 4143 
+ 1634      4B20 7265 
+ 1634      6365 6976 
+ 1637               	__c.1860:
+ 1638 027f 4572 726F 		.string	"Error: Invalid checksum [Poll]\r\n"
+ 1638      723A 2049 
+ 1638      6E76 616C 
+ 1638      6964 2063 
+ 1638      6865 636B 
+ 1639               		.lcomm state.1858,1
+ 1642               	__c.1791:
+ 1643 02a0 4572 726F 		.string	"Error: unknown subcommand [SETUP]\r\n"
+ 1643      723A 2075 
+ 1643      6E6B 6E6F 
+ 1643      776E 2073 
+ 1643      7562 636F 
+ 1646               	__c.1788:
+ 1647 02c4 4572 726F 		.string	"Error: no ACK received on [SETUP]"
+ 1647      723A 206E 
+ 1647      6F20 4143 
+ 1647      4B20 7265 
+ 1647      6365 6976 
+ 1650               	__c.1783:
+ 1651 02e6 4572 726F 		.string	"Error: invalid checksum [SETUP]\r\n"
+ 1651      723A 2069 
+ 1651      6E76 616C 
+ 1651      6964 2063 
+ 1651      6865 636B 
+ 1652               		.lcomm state.1777,1
+ 1653               		.data
+ 1656               	checksum.1776:
+ 1657 0020 1100      		.word	17
+ 1658               		.section	.progmem.data
+ 1661               	__c.1769:
+ 1662 0308 4572 726F 		.string	"Error: invalid checksum for [RESET]\r\n"
+ 1662      723A 2069 
+ 1662      6E76 616C 
+ 1662      6964 2063 
+ 1662      6865 636B 
+ 1727               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mdb.c
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:2      *ABS*:0000003f __SREG__
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:5      *ABS*:00000034 __CCP__
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:18     .text:00000000 mdb_reader
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1571   .progmem.data:00000067 __c.2015
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1517   .bss:00000002 mdb_active_cmd
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1511   .bss:00000001 mdb_poll_reply
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1567   .progmem.data:00000046 __c.2019
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1505   .bss:00000000 mdb_state
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1563   .progmem.data:00000025 __c.2022
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1559   .progmem.data:00000000 __c.2025
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:134    .text:000000b0 mdb_poll
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1606   .bss:0000001a state.1858
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1637   .progmem.data:0000027f __c.1860
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1633   .progmem.data:00000256 __c.1865
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1554   .bss:0000000c session
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1629   .progmem.data:0000022a __c.1871
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1625   .progmem.data:000001f9 __c.1874
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1621   .progmem.data:000001ce __c.1877
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1617   .progmem.data:000001a6 __c.1880
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1613   .progmem.data:0000017c __c.1883
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1609   .progmem.data:0000014f __c.1886
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:632    .text:00000440 mdb_setup
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1639   .bss:0000001b state.1777
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1656   .data:00000020 checksum.1776
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1650   .progmem.data:000002e6 __c.1783
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1529   .bss:00000004 vmc
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1541   .data:00000018 cd
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1535   .bss:00000008 price
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1646   .progmem.data:000002c4 __c.1788
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1642   .progmem.data:000002a0 __c.1791
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:937    .text:0000069e mdb_reset
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1661   .progmem.data:00000308 __c.1769
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1523   .bss:00000003 reset_done
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1004   .text:00000706 mdb_vend
+                             .bss:00000013 state.1933
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1605   .bss:00000014 data.1932
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1603   .progmem.data:0000012e __c.1941
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1599   .progmem.data:0000010d __c.1944
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1595   .progmem.data:00000106 __c.1946
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1591   .progmem.data:000000e5 __c.1953
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1587   .progmem.data:000000c4 __c.1956
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1583   .progmem.data:000000bc __c.1958
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1579   .progmem.data:0000009b __c.1961
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1575   .progmem.data:00000088 __c.1963
+C:\Users\Kuro\AppData\Local\Temp/ccyVTw3D.s:1413   .text:00000a04 mdb_cmd_handler
+
+UNDEFINED SYMBOLS
+buffer_level
+recv_mdb
+send_mdb
+send_str_p
+sprintf
+send_str
+__do_copy_data
+__do_clear_bss

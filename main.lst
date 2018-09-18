@@ -1,0 +1,80 @@
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	main
+  18               	main:
+  19               	.LFB7:
+  20               	.LM1:
+  21 0000 EF92      		push r14
+  22 0002 0F93      		push r16
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	.LM2:
+  26 0004 80E0      		ldi r24,lo8(0)
+  27 0006 40E0      		ldi r20,lo8(38400)
+  28 0008 56E9      		ldi r21,hi8(38400)
+  29 000a 60E0      		ldi r22,hlo8(38400)
+  30 000c 70E0      		ldi r23,hhi8(38400)
+  31 000e 28E0      		ldi r18,lo8(8)
+  32 0010 0EE4      		ldi r16,lo8(78)
+  33 0012 EE24      		clr r14
+  34 0014 E394      		inc r14
+  35 0016 0E94 0000 		call setup_usart
+  36               	.LM3:
+  37 001a 81E0      		ldi r24,lo8(1)
+  38 001c 40E8      		ldi r20,lo8(9600)
+  39 001e 55E2      		ldi r21,hi8(9600)
+  40 0020 60E0      		ldi r22,hlo8(9600)
+  41 0022 70E0      		ldi r23,hhi8(9600)
+  42 0024 29E0      		ldi r18,lo8(9)
+  43 0026 0E94 0000 		call setup_usart
+  44               	.LM4:
+  45               	/* #APP */
+  46               	 ;  32 "main.c" 1
+  47 002a 7894      		sei
+  48               	 ;  0 "" 2
+  49               	.LM5:
+  50               	/* #NOAPP */
+  51 002c 80E0      		ldi r24,lo8(0)
+  52 002e 60E0      		ldi r22,lo8(__c.1769)
+  53 0030 70E0      		ldi r23,hi8(__c.1769)
+  54 0032 0E94 0000 		call send_str_p
+  55               	.L2:
+  56               	.LM6:
+  57 0036 0E94 0000 		call mdb_cmd_handler
+  58               	.LM7:
+  59 003a 0E94 0000 		call uplink_cmd_handler
+  60 003e 00C0      		rjmp .L2
+  61               	.LFE7:
+  63               		.section	.progmem.data,"a",@progbits
+  66               	__c.1769:
+  67 0000 4D61 7465 		.string	"MateDealer is up and running\r\n"
+  67      4465 616C 
+  67      6572 2069 
+  67      7320 7570 
+  67      2061 6E64 
+  68               		.comm mdb_state,1,1
+  93               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:2      *ABS*:0000003f __SREG__
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:5      *ABS*:00000034 __CCP__
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:18     .text:00000000 main
+C:\Users\Kuro\AppData\Local\Temp/cc3pUvpi.s:66     .progmem.data:00000000 __c.1769
+                            *COM*:00000001 mdb_state
+
+UNDEFINED SYMBOLS
+setup_usart
+send_str_p
+mdb_cmd_handler
+uplink_cmd_handler
+__do_clear_bss

@@ -1,0 +1,256 @@
+reset
+reset
+MateDealer is up and running
+info
+info
+Error: Setup not yet completed!
+mdb-state
+mdb-state
+State: INACTIVE
+info
+info
+Error: Setup not yet completed!
+Error: checksum error [READER]
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+mdb-state
+mdb-state
+State: ENABLED
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+start-session 100
+start-session 100
+start-session 10
+start-session 10
+Error: MateDealer not ready for a session
+mdb-state
+mdb-state
+State: ENABLED
+mdb-state
+mdb-state
+State: ENABLED
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+start-session 2
+start-session 2
+vend-request 55 46
+approve-vend 55
+approve-vend 55
+vend-failure
+session-complete
+approve-vend
+approve-vend
+Error: MateDealer is not in a suitable state to approve a vend
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+mdb-state
+mdb-state
+State: ENABLED
+start-session 55
+start-session 55
+Error: invalid checksum [VEND]
+vend-cancel
+session-complete
+start-session 20
+start-session 20
+vend-request 55 47
+approve-vend 47
+approve-vend 47
+vend-success 47
+session-complete
+start-session 47
+start-session 47
+vend-request 55 47
+approve-vend 47approve-vend 47approve-vend 47
+approve-vend 47
+Error: Unknown command
+approve-vend 47
+approve-vend 47
+vend-success 47
+session-complete
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+mdb-state
+mdb-state
+State: ENABLED
+approve-vend 47
+approve-vend 47
+Error: MateDealer is not in a suitable state to approve a vend
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+start-session 55 47
+start-session 55 47
+start-session 47
+start-session 47
+Error: MateDealer not ready for a session
+approve-vend 47
+approve-vend 47
+Error: MateDealer is not in a suitable state to approve a vend
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           -1
+Minimum price:           0
+-----------------------------------------------
+mdb-state
+mdb-state
+State: ENABLED
+MateDealer is up and running
+start-session 55
+start-session 55
+Error: MateDealer not ready for a session
+mdb-state
+mdb-state
+State: INACTIVE
+mdb-state
+Error: invalid checksum [SETUP]
+mdb-state
+State: INACTIVE
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           0
+Minimum price:           0
+-----------------------------------------------
+mdb-state
+mdb-state
+State: ENABLED
+start-session 55
+start-session 55
+vend-request 55 47
+approve-vend 47
+
+approve-vend 47
+
+Error: Unknown command
+vend-success 47
+session-complete
+approve-vend 48
+approve-vend 48
+Error: MateDealer is not in a suitable state to approve a vend
+start-session 55start-session 55start-session 55
+start-session 55
+Error: Unknown command
+start-session 55
+start-session 55
+info
+info
+-----------------------------------------------
+## VMC configuration data ##
+VMC feature level:       2
+VMC display columns:     16
+VMC display rows:        2
+VMC display info:        1
+##    VMC price range     ##
+Maximum price:           0
+Minimum price:           0
+-----------------------------------------------
+mdb-state
+mdb-state
+State: SESSION IDLE
+mdb-state
+mdb-state
+State: SESSION IDLE
+vend-request 55 48
+approve-vend 48
+approve-vend 48
+vend-failure
+session-complete
+
+
+mdb-state 
+==> State: ENABLED
+
+start-session 
+
+==> vend-request 10000 36
+
+approve-vend 36
+deny-vend
+
+==>vend-success
+==>session-complete
